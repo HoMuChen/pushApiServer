@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const logger = require('./utils/logger');
 const subscriptions = require('./routes/subscriptions');
@@ -13,6 +14,7 @@ module.exports = (config) => {
 		stream: logger.stream
 	}));
 	app.use(bodyParser.json());
+	app.use(cors());
 
 	app.use('/subscriptions', subscriptions( config.subscriptionsDBConfig ));
 	app.use('/push', push( config.pushManagerConfig ));
